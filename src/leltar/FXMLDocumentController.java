@@ -5,6 +5,9 @@
  */
 package leltar;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -14,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 
 /**
  *
@@ -106,7 +110,26 @@ public class FXMLDocumentController implements Initializable {
     void eszkoz_uj() {
 
     }
-
+    
+    @FXML
+    void export() {
+        FileChooser fv = new FileChooser();
+        fv.setTitle("Exportálás");
+        FileChooser.ExtensionFilter szuro = new FileChooser.ExtensionFilter("CSV fájl", "*.csv");
+        fv.getExtensionFilters().add(szuro);
+        fv.setInitialDirectory(new File("."));
+        File f = fv.showSaveDialog(null);
+        if (f!=null) {
+            try (PrintWriter ki = new PrintWriter(f.getAbsoluteFile(), "cp1250")){
+                for (Tetel t : tblLeltar.getItems()) {
+                    ki.println(t);
+                }    
+            } catch (IOException ex) {
+                hiba ("Hiba", "Nem tudtam exportálni!");
+            }
+        }                
+    }
+    
     @FXML
     void leltar_hozzaad() {
         if (cbxTerem.getValue()==null) {
