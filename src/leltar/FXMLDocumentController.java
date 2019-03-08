@@ -109,8 +109,15 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void leltar_hozzaad() {
-
-    }
+        if (cbxTerem.getValue()==null) {
+            hiba("Hiba!", "Válaszd ki a termet!");
+            return;
+        }    
+        if (cbxEszkoz.getValue()==null) {
+            hiba("Hiba!", "Válaszd ki az eszközt!");
+            return;
+        }
+    }    
 
     @FXML
     void leltar_modosit() {
@@ -207,6 +214,10 @@ public class FXMLDocumentController implements Initializable {
         else
             txtEv.setText("");
         txtMegjegyzes.setText(t.getMegjegyzes());
+    }
+
+    private void hiba(String hiba, String válaszd_ki_a_termet) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
